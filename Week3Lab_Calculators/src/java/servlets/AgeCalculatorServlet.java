@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Aster
  */
-public class AgeCalculatorsServlet extends HttpServlet {
+public class AgeCalculatorServlet extends HttpServlet {
 
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/WEB-INF/ageCalculatorForm.jsp")
+        getServletContext().getRequestDispatcher("/WEB-INF/age.jsp")
                 .forward(request, response);
     }
 
@@ -30,12 +30,15 @@ public class AgeCalculatorsServlet extends HttpServlet {
         
         if (age == null || age.equals("")){
             request.setAttribute("ageInput", age);
-            getServletContext().getRequestDispatcher("/WEB-INF/ageCalculatorForm.jsp")
+            request.setAttribute("message", "You must give your current age.");
+            getServletContext().getRequestDispatcher("/WEB-INF/age.jsp")
                 .forward(request, response);
             return;
         }
         
-        getServletContext().getRequestDispatcher("/WEB-INF/ageCalculatorForm.jsp")
+        int addedAge = 1 + Integer.parseInt(age);
+        request.setAttribute("message", "Your age next birthday will be " + addedAge + ".");
+        getServletContext().getRequestDispatcher("/WEB-INF/age.jsp")
                 .forward(request, response);
        ;
     }
