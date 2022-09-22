@@ -13,12 +13,17 @@
     </head>
     <body>
         <h1>Arithmetic Calculator</h1>
-                    <form method='post' action='ageCalculator'>
-                Enter your age:
-                <input type='number' name='ageInput' value='${age}'><br>
-                <input type='submit' value='Age next birthday'>
+                    <form method='post' action='arithmeticcalculator'>
+                First: 
+                <input type='text' name='firstInput' value='${firstNum}'><br>
+                Second: 
+                <input type='text' name='secondInput' value='${secondNum}'><br>
+                <input type='submit' value='+' name='operator'>
+                <input type='submit' value='-' name='operator'>
+                <input type='submit' value='*' name='operator'>
+                <input type='submit' value='%' name='operator'><br><br>
+                <p>Result: ${message}</p>
             </form>
-                <p>${message}</p>
         <a href='age'>Age Calculator</a>
         </div>
     </body>
