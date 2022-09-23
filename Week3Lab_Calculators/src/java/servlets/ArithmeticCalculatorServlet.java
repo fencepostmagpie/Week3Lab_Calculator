@@ -1,13 +1,10 @@
-
 package servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import static org.apache.el.lang.ELArithmetic.isNumber;
 
 /**
  *
@@ -15,12 +12,11 @@ import static org.apache.el.lang.ELArithmetic.isNumber;
  */
 public class ArithmeticCalculatorServlet extends HttpServlet {
 
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setAttribute("message", "---");
-                getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp")
+        getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp")
                 .forward(request, response);
     }
 
@@ -30,50 +26,50 @@ public class ArithmeticCalculatorServlet extends HttpServlet {
         String firstString = request.getParameter("firstInput");
         String secondString = request.getParameter("secondInput");
         String operator = request.getParameter("operator");
-        if ((firstString.equals("") || (!isNumber(firstString))) || (secondString.equals("") || (!isNumber(secondString)))) {
+        try {
+            double first = Integer.parseInt(firstString);
+            double second = Integer.parseInt(secondString);
+
+            switch (operator) {
+                case "+":
+                    request.setAttribute("message", Math.round(first + second));
+                    request.setAttribute("firstNum", firstString);
+                    request.setAttribute("secondNum", secondString);
+                    getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp")
+                            .forward(request, response);
+                    return;
+                case "-":
+                    request.setAttribute("message", Math.round(first - second));
+                    request.setAttribute("firstNum", firstString);
+                    request.setAttribute("secondNum", secondString);
+                    getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp")
+                            .forward(request, response);
+                    return;
+                case "*":
+                    request.setAttribute("message", Math.round(first * second));
+                    request.setAttribute("firstNum", firstString);
+                    request.setAttribute("secondNum", secondString);
+                    getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp")
+                            .forward(request, response);
+                    return;
+                case "%":
+                    request.setAttribute("message", Math.round(first % second));
+                    request.setAttribute("firstNum", firstString);
+                    request.setAttribute("secondNum", secondString);
+                    getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp")
+                            .forward(request, response);
+                    return;
+                default:
+                    request.setAttribute("message", "invalid");
+                    getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp")
+                            .forward(request, response);
+                    break;
+
+            }
+        } catch (NumberFormatException e) {
             request.setAttribute("message", "invalid");
             getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp")
                     .forward(request, response);
-            return;
-        }
-        int first = Integer.parseInt(firstString);
-        int second = Integer.parseInt(secondString);
-        
-            
-        switch (operator) {
-            case "+":
-                request.setAttribute("message", first + second);
-            request.setAttribute("firstNum", first);
-            request.setAttribute("secondNum", second);
-                getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp")
-                        .forward(request, response);
-                return;
-            case "-":
-                request.setAttribute("message", first - second);
-            request.setAttribute("firstNum", first);
-            request.setAttribute("secondNum", second);
-                getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp")
-                        .forward(request, response);
-                return;
-            case "*":
-                request.setAttribute("message", first * second);
-            request.setAttribute("firstNum", first);
-            request.setAttribute("secondNum", second);
-                getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp")
-                        .forward(request, response);
-                return;
-            case "%":
-                request.setAttribute("message", first % second);
-            request.setAttribute("firstNum", first);
-            request.setAttribute("secondNum", second);
-                getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp")
-                        .forward(request, response);
-                return;
-            default:
-                request.setAttribute("message", "invalid");
-                getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp")
-                        .forward(request, response);
-                break;
         }
     }
 }
